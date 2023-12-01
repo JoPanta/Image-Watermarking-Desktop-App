@@ -8,7 +8,7 @@ fhd = (1920, 1080)
 base_image = Image.open("thewitcher.jpg")
 watermark = Image.open("png.png")
 
-#resize wattermark and base_image
+#resize watermark and base_image
 base_image.thumbnail(fhd)
 watermark.thumbnail(resize)
 
@@ -26,15 +26,28 @@ base_image.paste(watermark, position, watermark)
 folder_path = "./images"
 output_folder_path = "./fhd images"
 
-for image in os.listdir(folder_path):
+# for image in os.listdir(folder_path):
+#     if image.endswith(".jpg"):
+#         image_path = os.path.join(folder_path, image)
+#
+#         i = Image.open(image_path)
+#         fn, fext = os.path.splitext(image)
+#
+#         i.thumbnail(fhd)
+#         output_path = os.path.join(output_folder_path, "{}_fhd{}".format(fn, fext))
+#         i.save(output_path)
+
+#then watermark them
+for image in os.listdir(output_folder_path):
+    if image.endswith(".png"):
+        image_path = os.path.join(output_folder_path, image)
+        watermark = Image.open(image_path)
     if image.endswith(".jpg"):
-        image_path = os.path.join(folder_path, image)
+        image_path = os.path.join(output_folder_path, image)
 
         i = Image.open(image_path)
         fn, fext = os.path.splitext(image)
 
-        i.thumbnail(fhd)
-        output_path = os.path.join(output_folder_path, "{}_fhd{}".format(fn, fext))
+        i.paste(watermark, position, watermark)
+        output_path = os.path.join(output_folder_path, "{}_watermarked{}".format(fn, fext))
         i.save(output_path)
-
-#then watermark them
